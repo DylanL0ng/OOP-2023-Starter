@@ -46,16 +46,66 @@ public class DANI extends PApplet {
 				}
 			}
 		}
-		printModel();
+		// printModel();
+
+		writeSonnet();
 	}
 
     String[] sonnet;
 
     public String[] writeSonnet()
     {
-		// int random = wordList.get(Math.random());
-        return null;
+		sonnet = new String[14];
+		for (int i = 0; i < 14; i++)
+		{
+			int size = wordList.size();
+			int index = parseInt(random(size));
+			Word randomWord = wordList.get(index);
+	
+			String sentence = generateSentence(randomWord);
+			sonnet[i] = sentence;
+		}
+
+        return sonnet;
     }
+
+	public void displaySonnet(boolean printConsole, boolean printScreen)
+	{
+		for (int i = 0; i < sonnet.length; i++)
+		{
+			if (printConsole)
+				System.out.println(sonnet[i]);
+			if (printScreen)
+			{
+				
+			}
+		}
+	}
+
+	public String generateSentence(Word word)
+	{
+		Word target = word;
+		String sentence = word.getWord() + " ";
+
+		for (int i = 0; i < 8; i++)
+		{
+			ArrayList<Follow> followList = target.getFollowList();
+			int follow_size = followList.size();
+			
+			if (follow_size == 0)
+			{
+				return sentence;
+			}
+	
+			int follow_idx = parseInt(random(follow_size));
+			Follow random_follow = followList.get(follow_idx);
+
+			sentence = sentence + random_follow.getWord() + " ";
+			target = findWord(random_follow.getWord());
+		}
+
+		return sentence;
+	}
 
 	public void printModel()
 	{
