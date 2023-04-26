@@ -66,19 +66,26 @@ public class DANI extends PApplet {
 			sonnet[i] = sentence;
 		}
 
+		printSonnet();
         return sonnet;
     }
 
-	public void displaySonnet(boolean printConsole, boolean printScreen)
+	public void displaySonnet()
+	{
+		float offsetY = 80.0f;
+
+		for (int i = 0; i < sonnet.length; i++)
+		{
+			text(sonnet[i], (width / 2.0f), offsetY);
+			offsetY+= 30.0f;
+		}
+	}
+
+	public void printSonnet()
 	{
 		for (int i = 0; i < sonnet.length; i++)
 		{
-			if (printConsole)
-				System.out.println(sonnet[i]);
-			if (printScreen)
-			{
-				
-			}
+			System.out.println(sonnet[i]);
 		}
 	}
 
@@ -145,6 +152,6 @@ public class DANI extends PApplet {
 		noStroke();
 		textSize(20);
         textAlign(CENTER, CENTER);
-        
+        displaySonnet();
 	}
 }
