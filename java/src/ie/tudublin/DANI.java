@@ -14,7 +14,7 @@ public class DANI extends PApplet {
 	}
 
 	public void loadFile() {
-		String[] lines = loadStrings("small.txt"); // Load a text file into a String array
+		String[] lines = loadStrings("shakespere.txt"); // Load a text file into a String array
 
 		for (int i=0; i < lines.length; i++)
 		{
@@ -33,8 +33,13 @@ public class DANI extends PApplet {
 				}
 
 				ArrayList<Follow> wordFollowList = foundWord.getFollowList();
-				try {
+				
+				// Check if it is out of bounds
+				if ((j + 1) < line.length)
+				{
 					Follow foundFollow = foundWord.findFollow(line[j + 1]);
+					// If there is no follow add a follow
+					// if there is a follow increment the count
 					if (foundFollow == null)
 					{
 						Follow f = new Follow(line[j + 1]);
@@ -42,13 +47,11 @@ public class DANI extends PApplet {
 					}
 					else
 						foundFollow.setCount(foundFollow.getCount() + 1);	
-				} catch (Exception e) {
 				}
 			}
 		}
-		// printModel();
 
-		writeSonnet();
+		printModel();
 	}
 
     String[] sonnet;
@@ -72,21 +75,25 @@ public class DANI extends PApplet {
 
 	public void displaySonnet()
 	{
+		// offset y represents the gap between new lines
+		// off represents the y vertical offset between the whole sonnet
+
 		float offsetY = 80.0f;
 
 		for (int i = 0; i < sonnet.length; i++)
 		{
-			text(sonnet[i], (width / 2.0f), offsetY);
+			text(sonnet[i], (width / 2.0f), off + offsetY);
 			offsetY+= 30.0f;
 		}
 	}
 
 	public void printSonnet()
 	{
+		System.out.println("\nNEW SONNET:\n");
+
 		for (int i = 0; i < sonnet.length; i++)
-		{
 			System.out.println(sonnet[i]);
-		}
+		System.out.println();
 	}
 
 	public String generateSentence(Word word)
@@ -99,10 +106,9 @@ public class DANI extends PApplet {
 			ArrayList<Follow> followList = target.getFollowList();
 			int follow_size = followList.size();
 			
+			// If theres no follows then end sentence
 			if (follow_size == 0)
-			{
 				return sentence;
-			}
 	
 			int follow_idx = parseInt(random(follow_size));
 			Follow random_follow = followList.get(follow_idx);
@@ -117,9 +123,7 @@ public class DANI extends PApplet {
 	public void printModel()
 	{
 		for (Word w: wordList)
-		{
 			System.out.println(w.toString());
-		}
 	}
 
 	public Word findWord(String word)
@@ -136,14 +140,15 @@ public class DANI extends PApplet {
 	public void setup() {
 		colorMode(HSB);
 		loadFile();
-       
+		writeSonnet();
 	}
 
 	public void keyPressed() {
-
+		if (keyCode == ' ')
+			writeSonnet();
 	}
 
-	float off = 0;
+	float off = 120.0f;
 
 	public void draw() 
     {
