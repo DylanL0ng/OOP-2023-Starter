@@ -45,6 +45,12 @@ public class Word {
 
     public String toString()
     {
-        return "";
+        String x = this.word + ": ";
+        for (Follow f: this.followList)
+        {
+            x = x + f.toString();
+        }
+        
+        return x;
     }
 }

@@ -26,7 +26,7 @@ public class Follow {
 
     public String toString()
     {
-        return "";
+        return this.word + "(" + this.count + ") ";
     }
 
     

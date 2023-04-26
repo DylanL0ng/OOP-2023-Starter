@@ -53,6 +53,7 @@ public class DANI extends PApplet {
 
     public String[] writeSonnet()
     {
+		// int random = wordList.get(Math.random());
         return null;
     }
 
@@ -60,12 +61,7 @@ public class DANI extends PApplet {
 	{
 		for (Word w: wordList)
 		{
-			System.out.print(w.getWord() + ": ");
-			for (Follow f: w.getFollowList())
-			{
-				System.out.printf("%s(%d) ", f.getWord(), f.getCount());
-			}
-			System.out.println();
+			System.out.println(w.toString());
 		}
 	}
 
