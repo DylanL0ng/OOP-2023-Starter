@@ -18,9 +18,10 @@ public class Follow {
     private int count;
 
 
-    Follow()
+    Follow(String word)
     {
-
+        this.word = word;
+        this.count = 1;
     }
 
     public String toString()

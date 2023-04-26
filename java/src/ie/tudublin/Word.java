@@ -2,8 +2,6 @@ package ie.tudublin;
 
 import java.util.ArrayList;
 
-import processing.data.FloatList;
-
 public class Word {
     private String word;
     public String getWord() {
@@ -26,22 +24,23 @@ public class Word {
 
     private ArrayList<Follow> followList;
 
-    public String findFollow(String word)
+    public Follow findFollow(String word)
     {
         for (Follow f: followList)
         {
             if (f.getWord().equals(word))
             {
-                return f.getWord();
+                return f;
             }
         }
-        
+
         return null;
     }
 
     Word(String word)
     {
         this.word = word;
+        this.followList = new ArrayList<Follow>();
     }
 
     public String toString()

@@ -24,13 +24,29 @@ public class DANI extends PApplet {
 
 			for (int j=0; j < line.length; j++)
 			{
-				if (findWord(line[j]) == null)
+				Word foundWord = findWord(line[j]);
+				if (foundWord == null)
 				{
 					Word x = new Word(line[j]);
+					foundWord = x;
 					wordList.add(x);
+				}
+
+				ArrayList<Follow> wordFollowList = foundWord.getFollowList();
+				try {
+					Follow foundFollow = foundWord.findFollow(line[j + 1]);
+					if (foundFollow == null)
+					{
+						Follow f = new Follow(line[j + 1]);
+						wordFollowList.add(f);
+					}
+					else
+						foundFollow.setCount(foundFollow.getCount() + 1);	
+				} catch (Exception e) {
 				}
 			}
 		}
+		printModel();
 	}
 
     String[] sonnet;
@@ -40,12 +56,25 @@ public class DANI extends PApplet {
         return null;
     }
 
-	public String findWord(String word)
+	public void printModel()
+	{
+		for (Word w: wordList)
+		{
+			System.out.print(w.getWord() + ": ");
+			for (Follow f: w.getFollowList())
+			{
+				System.out.printf("%s(%d) ", f.getWord(), f.getCount());
+			}
+			System.out.println();
+		}
+	}
+
+	public Word findWord(String word)
 	{
 		for (Word w:wordList)
 		{
 			if (word.equals(w.getWord()))
-				return w.getWord();
+				return w;
 		}
 
 		return null;
