@@ -6,11 +6,25 @@ import processing.core.PApplet;
 
 public class DANI extends PApplet {
 
-	
-
 	public void settings() {
 		size(1000, 1000);
 		//fullScreen(SPAN);
+	}
+
+	public void loadFile() {
+		String[] lines = loadStrings("small.txt"); // Load a text file into a String array
+
+		for (int i=0; i < lines.length; i++)
+		{
+			lines[i] = lines[i].replaceAll("[^\\w\\s]","");
+			lines[i] = lines[i].toLowerCase();
+			String[] line = split(lines[i], ' ');
+
+			for (int j=0; j < line.length; j++)
+			{
+				System.out.println(line[j]);
+			}
+		}
 	}
 
     String[] sonnet;
@@ -22,7 +36,7 @@ public class DANI extends PApplet {
 
 	public void setup() {
 		colorMode(HSB);
-
+		loadFile();
        
 	}
 
