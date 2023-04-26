@@ -6,6 +6,8 @@ import processing.core.PApplet;
 
 public class DANI extends PApplet {
 
+	private ArrayList<Word> wordList = new ArrayList<Word>();
+
 	public void settings() {
 		size(1000, 1000);
 		//fullScreen(SPAN);
@@ -22,7 +24,11 @@ public class DANI extends PApplet {
 
 			for (int j=0; j < line.length; j++)
 			{
-				System.out.println(line[j]);
+				if (findWord(line[j]) == null)
+				{
+					Word x = new Word(line[j]);
+					wordList.add(x);
+				}
 			}
 		}
 	}
@@ -33,6 +39,17 @@ public class DANI extends PApplet {
     {
         return null;
     }
+
+	public String findWord(String word)
+	{
+		for (Word w:wordList)
+		{
+			if (word.equals(w.getWord()))
+				return w.getWord();
+		}
+
+		return null;
+	}
 
 	public void setup() {
 		colorMode(HSB);
