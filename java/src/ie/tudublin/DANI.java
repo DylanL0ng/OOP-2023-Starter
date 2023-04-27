@@ -1,16 +1,15 @@
 package ie.tudublin;
 
 import java.util.ArrayList;
-
 import processing.core.PApplet;
 
 public class DANI extends PApplet {
 
 	private ArrayList<Word> wordList = new ArrayList<Word>();
+	private String[] sonnet;
 
 	public void settings() {
 		size(1000, 1000);
-		//fullScreen(SPAN);
 	}
 
 	public void loadFile() {
@@ -18,13 +17,20 @@ public class DANI extends PApplet {
 
 		for (int i=0; i < lines.length; i++)
 		{
+			// Remove punctuation, and lower case words
 			lines[i] = lines[i].replaceAll("[^\\w\\s]","");
 			lines[i] = lines[i].toLowerCase();
+
+			// Split each line up into their individual words
 			String[] line = split(lines[i], ' ');
 
+			// Check each word in a line
 			for (int j=0; j < line.length; j++)
 			{
 				Word foundWord = findWord(line[j]);
+
+				// If a word isn't found, init a new word object and
+				// add it into the word list.
 				if (foundWord == null)
 				{
 					Word x = new Word(line[j]);
@@ -38,6 +44,7 @@ public class DANI extends PApplet {
 				if ((j + 1) < line.length)
 				{
 					Follow foundFollow = foundWord.findFollow(line[j + 1]);
+					
 					// If there is no follow add a follow
 					// if there is a follow increment the count
 					if (foundFollow == null)
@@ -54,13 +61,17 @@ public class DANI extends PApplet {
 		printModel();
 	}
 
-    String[] sonnet;
-
     public String[] writeSonnet()
     {
+		// Reset the sonnet;
 		sonnet = new String[14];
+
 		for (int i = 0; i < 14; i++)
 		{
+			// Generate a random word and use it
+			// to generate a new sentence, repeat
+			// 14 times to fill up the sonnet.
+
 			int size = wordList.size();
 			int index = parseInt(random(size));
 			Word randomWord = wordList.get(index);
@@ -98,6 +109,11 @@ public class DANI extends PApplet {
 
 	public String generateSentence(Word word)
 	{
+		// Generates a sentence using a starting word
+		// max length of the sentence is 8 words, if the
+		// target word has no follow then it will end the
+		// sentence.
+		
 		Word target = word;
 		String sentence = word.getWord() + " ";
 
